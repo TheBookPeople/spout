@@ -1,5 +1,12 @@
 # Spout
 
+This for can be deleted  when box/spout version 3.0 is released 
+
+It Includes a fix for CSV escaping
+
+https://github.com/box/spout/pull/500/commits/278b2c32c23e083c5c131adf077c3b591ae371e8
+
+
 [![Latest Stable Version](https://poser.pugx.org/box/spout/v/stable)](https://packagist.org/packages/box/spout)
 [![Project Status](http://opensource.box.com/badges/active.svg)](http://opensource.box.com/badges)
 [![Build Status](https://travis-ci.org/box/spout.svg?branch=master)](https://travis-ci.org/box/spout)

@@ -2,16 +2,15 @@
 
 namespace Box\Spout\Common\Helper;
 
-/**
- * Class GlobalFunctionsHelper
- * This class wraps global functions to facilitate testing
- *
- * @codeCoverageIgnore
- *
- * @package Box\Spout\Common\Helper
- */
-class GlobalFunctionsHelper
-{
+// Override CSV methods to fix escaping problems
+// Implements Fix from Commit
+//
+// https://github.com/box/spout/pull/500/commits/278b2c32c23e083c5c131adf077c3b591ae371e8
+//
+//This class can be removed when Akeneo moves to box/spout version 3.0
+//as this fix is included.
+class GlobalFunctionsHelper {
+
     /**
      * Wrapper around global function fopen()
      * @see fopen()
@@ -88,7 +87,12 @@ class GlobalFunctionsHelper
      */
     public function fgetcsv($handle, $length = null, $delimiter = null, $enclosure = null)
     {
-        return fgetcsv($handle, $length, $delimiter, $enclosure);
+        // PHP uses '\' as the default escape character. This is not RFC-4180 compliant...
+        // To fix that, simply disable the escape character.
+        // @see https://bugs.php.net/bug.php?id=43225
+        // @see http://tools.ietf.org/html/rfc4180
+        $escapeCharacter = "\0";
+        return fgetcsv($handle, $length, $delimiter, $enclosure, $escapeCharacter);
     }
 
     /**
@@ -103,7 +107,12 @@ class GlobalFunctionsHelper
      */
     public function fputcsv($handle, array $fields, $delimiter = null, $enclosure = null)
     {
-        return fputcsv($handle, $fields, $delimiter, $enclosure);
+        // PHP uses '\' as the default escape character. This is not RFC-4180 compliant...
+        // To fix that, simply disable the escape character.
+        // @see https://bugs.php.net/bug.php?id=43225
+        // @see http://tools.ietf.org/html/rfc4180
+        $escapeCharacter = "\0";
+        return fputcsv($handle, $fields, $delimiter, $enclosure, $escapeCharacter);
     }
 
     /**
